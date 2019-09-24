@@ -13,6 +13,8 @@ local areaOfRectangle
 local radius =150
 local AreaofCircle
 local PI = 3.14
+local areaTextCircle
+local areaOfCircle
 
 --set the background colour of my screen remember that colours are between 0 and 1
 display.setDefault("background",200/255, 0/255, 0/255)
@@ -53,8 +55,8 @@ areaText.x = 20
 areaText.y = display.contentHeight/2
 
 local myCircle = display.newCircle( 100, 100, radius )
-myCircle.x = 160
-myCircle.y = display.contentHeight*3/4
+myCircle.x = 850
+myCircle.y = 150
 myCircle:setFillColor( 0.5 )
 myCircle.strokeWidth = 5
 myCircle:setStrokeColor( 1, 0, 0 )
@@ -69,4 +71,9 @@ myCircle:setFillColor(0.7, 0.1, 0.3)
 myCircle:setStrokeColor(0, 12, 0)
 
 --calculate the area
-AreaofCircle = PI * radius * radius
+areaOfCircle = PI * radius * radius
+
+--write the area on the screen. Take into consideration the size of the font when positioning it on the screen
+areaTextCircle = display.newText("The area of this circle with a radius of \n" ..
+	radius .. " and PI as " .. PI .. " is " ..
+	areaOfCircle .. " pixel².", 450, 600, Arial, textSize)
