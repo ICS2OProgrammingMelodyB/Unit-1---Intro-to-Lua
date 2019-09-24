@@ -9,7 +9,7 @@ local textSize =50
 local myRectangle
 local widthofRectangle =350
 local heightofRectangle =200
-local AreaOfRectangle
+local areaOfRectangle
 local radius =150
 local AreaofCircle
 local PI = 3.14
@@ -39,12 +39,12 @@ myRectangle:setFillColor(0.7, 0.1, 0.3)
 myRectangle:setStrokeColor(0, 12, 0)
 
 --calculate the area
-AreaofRectangle = widthofRectangle * heightofRectangle
+areaOfRectangle = widthofRectangle * heightofRectangle
 
 --write the area on the screen. Take into consideration the size of the font when positioning it on the screen
 areaText = display.newText("The area of this rectangle with a width of \n" ..
 	widthofRectangle .. " and a height of " .. heightofRectangle .. " is " ..
-	areaofRectangle .. " pixel².", 200, 400, Arial, textSize)
+	areaOfRectangle .. " pixel².", 200, 400, Arial, textSize)
 
 --anchor the text and set its (x,y) position
 areaText.anchorX = 0
@@ -69,4 +69,4 @@ myCircle:setFillColor(0.7, 0.1, 0.3)
 myCircle:setStrokeColor(0, 12, 0)
 
 --calculate the area
-AreaofCircle = PI * raduis * raduis
+AreaofCircle = PI * radius * radius
