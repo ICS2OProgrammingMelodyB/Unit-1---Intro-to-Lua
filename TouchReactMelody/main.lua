@@ -15,6 +15,20 @@ blueButton.x = display.contentWidth/2
 blueButton.y = display.contentHeight/2
 blueButton.isVisible = true 
 
+
+-- Completion listener function(I got it from https://docs.coronalabs.com/api/library/audio/loadSound.html)
+local function CorrectAnswer( event )
+    print( "CorrectAnswer Finished on channel", event.channel )
+    if ( event.completed ) then
+        print( "CorrectAnswer completed playback naturally" )
+    else
+        print( "CorrectAnswer was stopped before completion" )
+    end
+end
+ 
+-- Load two audio streams and one sound(I got it from the same wedsite but I made some changes.)
+local backgroundMusic = audio.loadStream( "Images/Correct Answer Sound Effect.MP3" )
+
 --create red button, set its positions and make it visible
 local redButton = display.newImageRect("Images/Fast Button Active@2x.png", 198, 98)
 redButton.x = display.contentWidth/2
@@ -38,12 +52,17 @@ local function BlueButtonListener(touch)
 		blueButton.isVisible = false
 		redButton.isVisible = true
 		textObject.isVisible = true
+		backgroundMusic1 = true
+		-- Play the background music on channel 1, and fades out in 3 seconds 
+        local backgroundMusicChannel = audio.play( backgroundMusic, { channel=1, loops=0, fadeout=3000 } )
+
 	end
 
 	if (touch.phase == "ended") then
 		blueButton.isVisible = true
 		redButton.isVisible = false
 		textObject.isVisible = false
+		backgroundMusic1 = false
 	end
 end
 
