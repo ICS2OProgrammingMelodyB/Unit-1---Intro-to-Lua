@@ -1,8 +1,8 @@
--- Title: NumericTextFields
+-- Title: Points
 -- Name: Melody Berhane
 -- Course: ICS2O
 -- This program displays a math question and asks the user to answer in a numeric textfield
---terminal.
+--terminal and gives points for every correct answer
 
 --hide the status bar
 display.setStatusBar(display.HiddenStatusBar)
@@ -10,7 +10,9 @@ display.setStatusBar(display.HiddenStatusBar)
 --set the background colour
 display.setDefault("background", 240/255, 5/255, 255/255)
 
+----------------------------------------------------------------------------------
 --LOCAL VARIABLES
+----------------------------------------------------------------------------------
 
 --create local variable
 local questionObject
@@ -21,8 +23,11 @@ local randomNumber2
 local userAnser
 local correctAnswer
 local incorrectObject
+local points = 0
 
+-----------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
+-----------------------------------------------------------------------------------
 
 local function AskQuestion()
 	--generate 2 random numbers between a max. and a min. number
@@ -59,8 +64,14 @@ local function NumericFieldsListener( event )
 
 		--if the users answer and the correct answer are the same:
 	    if (userAnswer == correctAnswer) then
-			correctObject.isVisible = true
-			timer.performWithDelay(1000, Hidecorrect)			
+	    	correctObject.isVisible = true
+			timer.performWithDelay(1000, Hidecorrect)
+
+	    	-- give a point if user gets the correct answer
+	    	points = points + 1
+
+	    	--update it in the display object
+	    	pointsText.text = "Points = " .. points			
 			
         else 
         	--if the users answer and the correct answer are not the same:
@@ -73,7 +84,9 @@ local function NumericFieldsListener( event )
 	end
 end
 
+------------------------------------------------------------------------------------------------
 --OBJECT CREATION
+-------------------------------------------------------------------------------------------------
 
 --display a question and sets the colour
 questionObject = display.newText( "", display.contentWidth/3, display.contentHeight/2, nil, 50)
@@ -92,6 +105,9 @@ incorrectObject.isVisible = false
 --create numeric field
 numericField = native.newTextField( display.contentWidth/2, display.contentHeight/2, 170, 100)
 numericField.inputtype = false
+
+--display the amount of points as a text object
+pointText = display.newText("Points = " .. points, 900, 20, nil, 50)
 
 --add the event listener for thr numeric field
 numericField:addEventListener( "userInput", NumericFieldsListener)
