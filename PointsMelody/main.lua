@@ -72,7 +72,13 @@ local function NumericFieldsListener( event )
 	    if (userAnswer == correctAnswer) then
 	    	correctObject.isVisible = true
 			timer.performWithDelay(1000, Hidecorrect)
-
+		if (points == 4 ) then
+	  		    WinObject.isVisible = true 
+	  		    incorrectObject.isVisible = false
+	  		    correctObject.isVisible = false
+	  		    questionObject.isVisible = false
+	  		    numericField.inputtype = false
+	  	    end
 	    	-- give a point if user gets the correct answer
 	    	points = points + 1
 
@@ -82,19 +88,26 @@ local function NumericFieldsListener( event )
         else 
         	if (lives == 1 ) then
 	  		    gameOverObject.isVisible = true 
+	  		    incorrectObject.isVisible = false
+	  		    correctObject.isVisible = false
+	  		    questionObject.isVisible = false
+	  		    numericField.inputtype = false
 			else
-        	--if the users answer and the correct answer are not the same:
-            incorrectObject.isVisible = true
-		    timer.performWithDelay(1000, Hideincorrect) 
-		    correctAnswerObject.text = "The correct answer is" ..  correctAnswer
-		    correctAnswerObject.isVisible = true
-		    timer.performWithDelay(1500, HidecorrectAnswer)
 
-		    -- take a life if user gets the incorrect answer
-	    	lives = lives - 1
+        	 --if the users answer and the correct answer are not the same:
+             incorrectObject.isVisible = true
+		     timer.performWithDelay(1000, Hideincorrect) 
+		     correctAnswerObject.text = "The correct answer is" ..  correctAnswer
+		     correctAnswerObject.isVisible = true
+		     timer.performWithDelay(1500, HidecorrectAnswer)
 
-	    	--update it in the display object
-	    	livesText.text = "lives = " .. lives
+
+		     -- take a life if user gets the incorrect answer
+	    	 lives = lives - 1
+
+	    	 --update it in the display object
+	    	 livesText.text = "lives = " .. lives
+	    	end
 		end
 		--clear text field
 		event.target.text = ""
@@ -112,9 +125,15 @@ questionObject = display.newText( "", display.contentWidth/3, display.contentHei
 questionObject:setTextColor(5/255, 5/255, 200/255)
 
 --display GameOver! and sets the colour
-gameOverObject = display.newText( "Game Over!", display.contentWidth/2, display.contentHeight*3/4, nil, 50)
+gameOverObject = display.newText( "Game Over!", display.contentWidth/2, display.contentHeight*3/4, nil, 150)
 gameOverObject:setTextColor(5/255, 5/255, 200/255)
 gameOverObject.isVisible = false
+
+
+--display You win! and sets the colour
+WinObject = display.newText( "You Win!", display.contentWidth/2, display.contentHeight*3/4, nil, 150)
+WinObject:setTextColor(5/255, 5/255, 200/255)
+WinObject.isVisible = false
 
 --create the correct text object and make it invisble
 correctObject = display.newText( "Correct!", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
