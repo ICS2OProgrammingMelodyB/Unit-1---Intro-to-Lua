@@ -8,7 +8,7 @@
 display.setStatusBar(display.HiddenStatusBar)
 
 --set the background colour
-display.setDefault("background", 240/255, 5/255, 255/255)
+display.setDefault("background", 250/255, 250/255, 15/255)
 
 ----------------------------------------------------------------------------------
 --LOCAL VARIABLES
@@ -21,9 +21,10 @@ local numericField
 local randomNumber1
 local randomNumber2
 local userAnser
-local correctAnswer
+local correctAnswer = 0
 local incorrectObject
 local points = 0
+local lives = 3
 
 -----------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -47,6 +48,11 @@ end
 
 local function Hideincorrect()
 	incorrectObject.isVisible = false
+end
+
+local function HidecorrectAnswer()
+	correctAnswerObject.isVisible = false
+	AskQuestion()
 end
 
 local function NumericFieldsListener( event )
@@ -74,15 +80,28 @@ local function NumericFieldsListener( event )
 	    	pointsText.text = "Points = " .. points			
 			
         else 
+        	if (lives == 1 ) then
+	  		    gameOverObject.isVisible = true 
+			else
         	--if the users answer and the correct answer are not the same:
-        	incorrectObject.isVisible = true
-		    timer.performWithDelay(1000, Hideincorrect)
+            incorrectObject.isVisible = true
+		    timer.performWithDelay(1000, Hideincorrect) 
+		    correctAnswerObject.text = "The correct answer is" ..  correctAnswer
+		    correctAnswerObject.isVisible = true
+		    timer.performWithDelay(1500, HidecorrectAnswer)
+
+		    -- take a life if user gets the incorrect answer
+	    	lives = lives - 1
+
+	    	--update it in the display object
+	    	livesText.text = "lives = " .. lives
 		end
 		--clear text field
 		event.target.text = ""
-		
 	end
 end
+
+
 
 ------------------------------------------------------------------------------------------------
 --OBJECT CREATION
@@ -90,16 +109,21 @@ end
 
 --display a question and sets the colour
 questionObject = display.newText( "", display.contentWidth/3, display.contentHeight/2, nil, 50)
-questionObject:setTextColor(5/255, 255/255, 200/255)
+questionObject:setTextColor(5/255, 5/255, 200/255)
+
+--display GameOver! and sets the colour
+gameOverObject = display.newText( "Game Over!", display.contentWidth/2, display.contentHeight*3/4, nil, 50)
+gameOverObject:setTextColor(5/255, 5/255, 200/255)
+gameOverObject.isVisible = false
 
 --create the correct text object and make it invisble
 correctObject = display.newText( "Correct!", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
-correctObject:setTextColor(5/255, 255/255, 200/255)
+correctObject:setTextColor(5/255, 5/255, 200/255)
 correctObject.isVisible = false
 
 --create the incorrect text object and make it invisble
 incorrectObject = display.newText( "InCorrect!", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
-incorrectObject:setTextColor(5/255, 255/255, 200/255)
+incorrectObject:setTextColor(5/255, 5/255, 200/255)
 incorrectObject.isVisible = false
 
 --create numeric field
@@ -107,12 +131,22 @@ numericField = native.newTextField( display.contentWidth/2, display.contentHeigh
 numericField.inputtype = false
 
 --display the amount of points as a text object
-pointText = display.newText("Points = " .. points, 900, 20, nil, 50)
+pointsText = display.newText("Points = " .. points, 900, 20, nil, 50)
+pointsText:setTextColor(5/255, 5/255, 200/255)
+
+--display the amount of lives as a text object
+livesText = display.newText("Lives = " .. lives, 120, 20, nil, 50)
+livesText:setTextColor(5/255, 5/255, 200/255)
+
+--display the correct answer
+correctAnswerObject = display.newText( "The correct answer is" ..  correctAnswer, display.contentWidth/2, display.contentHeight*3/4, nil, 50)
+correctAnswerObject:setTextColor(5/255, 5/255, 200/255)
+correctAnswerObject.isVisible = false
 
 --add the event listener for thr numeric field
 numericField:addEventListener( "userInput", NumericFieldsListener)
 
 --FUNCTION CALLS
 
--- call the funtion to ask the question
+-- call the function to ask the question
 AskQuestion()

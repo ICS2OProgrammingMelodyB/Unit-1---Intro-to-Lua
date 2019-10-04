@@ -36,12 +36,13 @@ local function AskQuestion()
 end
 
 local function Hidecorrect()
-	correctObject.isVisible = false
+	correctObject.isVisible = false	
 	AskQuestion()
 end
 
 local function Hideincorrect()
 	incorrectObject.isVisible = false
+	AskQuestion()
 end
 
 local function NumericFieldsListener( event )
@@ -60,13 +61,14 @@ local function NumericFieldsListener( event )
 		--if the users answer and the correct answer are the same:
 	    if (userAnswer == correctAnswer) then
 			correctObject.isVisible = true
-			timer.performWithDelay(1000, Hidecorrect)			
+			timer.performWithDelay(1000, Hidecorrect)				
 			
         else 
         	--if the users answer and the correct answer are not the same:
         	incorrectObject.isVisible = true
 		    timer.performWithDelay(1000, Hideincorrect)
 		end
+		
 		--clear text field
 		event.target.text = ""
 		
