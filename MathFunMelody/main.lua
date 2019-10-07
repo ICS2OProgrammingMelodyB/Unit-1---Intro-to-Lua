@@ -20,6 +20,7 @@ local randomNumber1
 local randomNumber2
 local userAnser
 local correctAnswer = 0
+local correctAnswer1
 local incorrectObject
 local randomOperator
 local correctAnswerObject
@@ -33,8 +34,8 @@ local function AskQuestions()
 	-- *** MAKE SURE TO DECLARE THIS VARIABLE ABOVE
 	randomOperator = math.random(1,4)
 	--generate 2 random numbers between a max. and a min. number
-	randomNumber1 = math.random(0, 7)
-	randomNumber2 = math.random(0, 7)
+	randomNumber1 = math.random(0, 10)
+	randomNumber2 = math.random(0, 10)
 
 	-- if the random operator is 1, then do addition
 	if (randomOperator == 1) then
@@ -49,6 +50,11 @@ local function AskQuestions()
 	elseif (randomOperator == 2)then
 		--calculate the correct answer
 		correctAnswer = randomNumber1 - randomNumber2
+		if (correctAnswer < 0)then
+			correctAnswer = randomNumber2 - randomNumber1
+			questionObject.text = randomNumber2 .. " + " .. randomNumber1 .. " = "
+		end
+
 
 		--create question in text object
 		questionObject.text = randomNumber1 .. " - " .. randomNumber2 .. " = "
@@ -64,10 +70,11 @@ local function AskQuestions()
 	-- otherwise, if the random operator is 4, do division
 	elseif (randomOperator == 4)then
 		--calculate the correct answer
-		correctAnswer = randomNumber1 / randomNumber2
+		correctAnswer1 = randomNumber1 * randomNumber2 
+		correctAnswer = correctAnswer1 / randomNumber1
 
 		--create question in text object
-		questionObject.text = randomNumber1 .. " / " .. randomNumber2 .. " = "
+		questionObject.text = correctAnswer1 .. " / " .. randomNumber1 .. " = "
 	end
 
 end
@@ -104,6 +111,7 @@ local function NumericFieldsListener( event )
 			correctObject.isVisible = true
 			timer.performWithDelay(1000, Hidecorrect)	
 		if (points == 4 ) then 
+				WinObject.isVisible = true 
 	  		    incorrectObject.isVisible = false
 	  		    correctObject.isVisible = false
 	  		    questionObject.isVisible = false
@@ -117,6 +125,7 @@ local function NumericFieldsListener( event )
 			
         else 
         	if (lives == 1 ) then 
+        		gameOverObject.isVisible = true 
 	  		    incorrectObject.isVisible = false
 	  		    correctObject.isVisible = false
 	  		    questionObject.isVisible = false
@@ -127,7 +136,7 @@ local function NumericFieldsListener( event )
         	incorrectObject.isVisible = true
         	math.round(correctAnswer)
 		    timer.performWithDelay(1000, Hideincorrect)
-		    correctAnswerObject.text = "The correct answer is" ..  correctAnswer
+		    correctAnswerObject.text = ("The correct answer is" ..  correctAnswer)
 		    correctAnswerObject.isVisible = true
 		    timer.performWithDelay(1500, HidecorrectAnswerObject)
 
@@ -163,6 +172,7 @@ incorrectObject.isVisible = false
 
 --create numeric field
 numericField = native.newTextField( display.contentWidth/2, display.contentHeight/2, 170, 100)
+numericField.inputtype = "numbers"
 numericField.inputtype = false
 
 --display the correct answer
