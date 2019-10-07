@@ -104,6 +104,7 @@ local function NumericFieldsListener( event )
 			correctObject.isVisible = true
 			timer.performWithDelay(1000, Hidecorrect)	
 		if (points == 4 ) then 
+				WinObject.isVisible = true
 	  		    incorrectObject.isVisible = false
 	  		    correctObject.isVisible = false
 	  		    questionObject.isVisible = false
@@ -116,7 +117,8 @@ local function NumericFieldsListener( event )
 	    	pointsText.text = "Points = " .. points			
 			
         else 
-        	if (lives == 1 ) then 
+        	if (lives == 1 ) then
+        	 	gameOverObject.isVisible = true  
 	  		    incorrectObject.isVisible = false
 	  		    correctObject.isVisible = false
 	  		    questionObject.isVisible = false
@@ -177,6 +179,16 @@ pointsText:setTextColor(5/255, 5/255, 200/255)
 --display the amount of lives as a text object
 livesText = display.newText("Lives = " .. lives, 120, 20, nil, 50)
 livesText:setTextColor(5/255, 5/255, 200/255)
+
+--display GameOver! and sets the colour
+gameOverObject = display.newText( "Game Over!", display.contentWidth/2, display.contentHeight*3/4, nil, 150)
+gameOverObject:setTextColor(5/255, 5/255, 200/255)
+gameOverObject.isVisible = false
+
+--display You win! and sets the colour
+WinObject = display.newText( "You Win!", display.contentWidth/2, display.contentHeight*3/4, nil, 150)
+WinObject:setTextColor(5/255, 5/255, 200/255)
+WinObject.isVisible = false
 
 --add the event listener for thr numeric field
 numericField:addEventListener( "userInput", NumericFieldsListener)
