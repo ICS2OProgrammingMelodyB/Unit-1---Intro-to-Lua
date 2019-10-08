@@ -20,6 +20,7 @@ local randomNumber1
 local randomNumber2
 local userAnser
 local correctAnswer = 0
+local correctAnswer1
 local incorrectObject
 local randomOperator
 local correctAnswerObject
@@ -49,9 +50,13 @@ local function AskQuestions()
 	elseif (randomOperator == 2)then
 		--calculate the correct answer
 		correctAnswer = randomNumber1 - randomNumber2
-
-		--create question in text object
-		questionObject.text = randomNumber1 .. " - " .. randomNumber2 .. " = "
+		if (correctAnswer < 0) then
+			correctAnswer = randomNumber2 - randomNumber1
+			questionObject.text = randomNumber2 .. " - " .. randomNumber1 .. " = "
+		else
+			--create question in text object
+			questionObject.text = randomNumber1 .. " - " .. randomNumber2 .. " = "
+		end
 	
 	-- otherwise, if the random operator is 3, do multiplication
 	elseif (randomOperator == 3)then
@@ -64,10 +69,11 @@ local function AskQuestions()
 	-- otherwise, if the random operator is 4, do division
 	elseif (randomOperator == 4)then
 		--calculate the correct answer
-		correctAnswer = randomNumber1 / randomNumber2
+		correctAnswer1 = randomNumber1 * randomNumber2
+		correctAnswer = correctAnswer1 / randomNumber1
 
 		--create question in text object
-		questionObject.text = randomNumber1 .. " / " .. randomNumber2 .. " = "
+		questionObject.text = correctAnswer1 .. " / " .. randomNumber1 .. " = "
 	end
 
 end
@@ -166,6 +172,7 @@ incorrectObject.isVisible = false
 --create numeric field
 numericField = native.newTextField( display.contentWidth/2, display.contentHeight/2, 170, 100)
 numericField.inputtype = false
+numericField.inputtype = "numbers"
 
 --display the correct answer
 correctAnswerObject = display.newText( "The correct answer is" ..  correctAnswer, display.contentWidth/2, display.contentHeight*3/4, nil, 50)
@@ -181,14 +188,16 @@ livesText = display.newText("Lives = " .. lives, 120, 20, nil, 50)
 livesText:setTextColor(5/255, 5/255, 200/255)
 
 --display GameOver! and sets the colour
-gameOverObject = display.newText( "Game Over!", display.contentWidth/2, display.contentHeight*3/4, nil, 150)
-gameOverObject:setTextColor(5/255, 5/255, 200/255)
+gameOverObject = display.newImageRect("images/lose.png", 2048, 1536)
 gameOverObject.isVisible = false
+gameOverObject.x=display.contentWidth/2
+gameOverObject.y=300
 
 --display You win! and sets the colour
-WinObject = display.newText( "You Win!", display.contentWidth/2, display.contentHeight*3/4, nil, 150)
-WinObject:setTextColor(5/255, 5/255, 200/255)
+WinObject = display.newImageRect("Images/win.jpg", 2048, 1536)
 WinObject.isVisible = false
+WinObject.x=display.contentWidth/2
+WinObject.y=300
 
 --add the event listener for thr numeric field
 numericField:addEventListener( "userInput", NumericFieldsListener)
