@@ -34,8 +34,8 @@ local function AskQuestions()
 	-- *** MAKE SURE TO DECLARE THIS VARIABLE ABOVE
 	randomOperator = math.random(1,4)
 	--generate 2 random numbers between a max. and a min. number
-	randomNumber1 = math.random(0, 7)
-	randomNumber2 = math.random(0, 7)
+	randomNumber1 = math.random(0, 10)
+	randomNumber2 = math.random(0, 10)
 
 	-- if the random operator is 1, then do addition
 	if (randomOperator == 1) then
@@ -114,7 +114,7 @@ local function NumericFieldsListener( event )
 	  		    incorrectObject.isVisible = false
 	  		    correctObject.isVisible = false
 	  		    questionObject.isVisible = false
-	  		    numericField.inputtype = false
+	  		    numericField.isVisible = false
 	   		end
 	    	-- give a point if user gets the correct answer
 	    	points = points + 1
@@ -128,7 +128,7 @@ local function NumericFieldsListener( event )
 	  		    incorrectObject.isVisible = false
 	  		    correctObject.isVisible = false
 	  		    questionObject.isVisible = false
-	  		    numericField.inputtype = false
+	  		    numericField.isVisible = false
 			else
         	
         	--if the users answer and the correct answer are not the same:
@@ -171,8 +171,8 @@ incorrectObject.isVisible = false
 
 --create numeric field
 numericField = native.newTextField( display.contentWidth/2, display.contentHeight/2, 170, 100)
-numericField.inputtype = false
-numericField.inputtype = "numbers"
+numericField.isVisible = true
+numericField.inputType = "number"
 
 --display the correct answer
 correctAnswerObject = display.newText( "The correct answer is" ..  correctAnswer, display.contentWidth/2, display.contentHeight*3/4, nil, 50)
