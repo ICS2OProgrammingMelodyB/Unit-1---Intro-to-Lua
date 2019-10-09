@@ -10,7 +10,16 @@ display.setStatusBar(display.HiddenStatusBar)
 --set the background colour
 display.setDefault("background", 240/255, 5/255, 255/255)
 
+-----------------------------------------------------
+--SOUND
+------------------------------------------------------
+
+-- Correct sound 
+local correctSound = audio.loadSound("Sounds/correctSound.MP3") -- setting a varable to an mp3 file
+local correctSoundChannel
+-------------------------------------------------------
 --LOCAL VARIABLES
+-------------------------------------------------------
 
 --create local variable
 local questionObject
@@ -27,7 +36,9 @@ local correctAnswerObject
 local points = 0
 local lives = 3
 
+----------------------------------------------------------
 --LOCAL FUNCTIONS
+----------------------------------------------------------
 
 local function AskQuestions()
 	--generate a random number between 1 and 4
@@ -108,8 +119,10 @@ local function NumericFieldsListener( event )
 		--if the users answer and the correct answer are the same:
 	    if (userAnswer == correctAnswer) then
 			correctObject.isVisible = true
+			correctSoundChannel = audio.play(correctSound)
 			timer.performWithDelay(1000, Hidecorrect)	
 		if (points == 4 ) then 
+			correctSoundChannel = audio.play(correctSound)
 				WinObject.isVisible = true
 	  		    incorrectObject.isVisible = false
 	  		    correctObject.isVisible = false
@@ -153,7 +166,9 @@ local function NumericFieldsListener( event )
 	end
 end
 
+-----------------------------------------------------------
 --OBJECT CREATION
+------------------------------------------------------------
 
 --display a question and sets the colour
 questionObject = display.newText( "", display.contentWidth/3, display.contentHeight/2, nil, 50)
@@ -202,7 +217,9 @@ WinObject.y=300
 --add the event listener for thr numeric field
 numericField:addEventListener( "userInput", NumericFieldsListener)
 
+-------------------------------------------------------------------
 --FUNCTION CALLS
+------------------------------------------------------------------
 
 -- call the funtion to ask the question
 AskQuestions()
