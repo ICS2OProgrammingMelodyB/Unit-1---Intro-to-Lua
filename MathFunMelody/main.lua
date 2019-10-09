@@ -122,7 +122,6 @@ local function NumericFieldsListener( event )
 			correctSoundChannel = audio.play(correctSound)
 			timer.performWithDelay(1000, Hidecorrect)	
 		if (points == 4 ) then 
-			correctSoundChannel = audio.play(correctSound)
 				WinObject.isVisible = true
 	  		    incorrectObject.isVisible = false
 	  		    correctObject.isVisible = false
