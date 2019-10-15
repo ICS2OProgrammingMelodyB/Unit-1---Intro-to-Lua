@@ -1,8 +1,9 @@
--- Title: MathFun
+-- Title: LivesAndTimers
 -- Name: Melody Berhane
 -- Course: ICS2O
 -- This program displays a math question and asks the user to answer in a numeric textfield
 --terminal.
+
 
 --hide the status bar
 display.setStatusBar(display.HiddenStatusBar)
@@ -35,6 +36,12 @@ local randomOperator
 local correctAnswerObject
 local points = 0
 local lives = 3
+local totalSeconds = 5 
+local secondsLeft = 5
+local clockText
+local countDownTimer
+local heart1
+local heart2
 
 ----------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -45,8 +52,8 @@ local function AskQuestions()
 	-- *** MAKE SURE TO DECLARE THIS VARIABLE ABOVE
 	randomOperator = math.random(1,4)
 	--generate 2 random numbers between a max. and a min. number
-	randomNumber1 = math.random(0, 10)
-	randomNumber2 = math.random(0, 10)
+	randomNumber1 = math.random(1, 10)
+	randomNumber2 = math.random(1, 10)
 
 	-- if the random operator is 1, then do addition
 	if (randomOperator == 1) then
@@ -156,7 +163,6 @@ local function NumericFieldsListener( event )
 
 		    -- take a life if user gets the incorrect answer
 	    	 lives = lives - 1
-
 	    	 --update it in the display object
 	    	 livesText.text = "lives = " .. lives
 	    	end
@@ -168,9 +174,46 @@ local function NumericFieldsListener( event )
 	end
 end
 
+local function UpdateTime()
+	-- decrement the number of seconds 
+	secondsLeft = secondsLeft - 1
+
+	-- display the number of seconds left in the clock object
+	clockText.text = secondLeft .. ""
+
+	if(secondsLeft == 0 )then
+		--reset the number of seconds left
+		secondsLeft = totalSeconds
+		lives = lives - 1
+
+		--cancel the timer and remove the third heart by making it invisible
+		if (lives == 2)then
+			heart2.isVisible = false
+		elseif(lives == 1)then
+			heart1.isVisible = false
+		end
+		AskQuestions()
+	end
+end
+
+local function StartTimer()
+	--create a countdown timer that loops infinitely
+	countDownTimer = timer.performWithDelay(1000, UpdateTime, 0)
+end
+
 -----------------------------------------------------------
 --OBJECT CREATION
 ------------------------------------------------------------
+
+--create the lives to display on the screen
+heart1= display.newImageRect("images/heart.png", 100, 100)
+heart1.x= display.contentWidth * 7/8
+heart1.y=  display.contentHeight * 1/7
+
+--create the lives to display on the screen
+heart2= display.newImageRect("images/heart.png", 100, 100)
+heart2.x= display.contentWidth * 6/8
+heart2.y=  display.contentHeight * 1/7
 
 --display a question and sets the colour
 questionObject = display.newText( "", display.contentWidth/3, display.contentHeight/2, nil, 50)
@@ -205,9 +248,9 @@ livesText = display.newText("Lives = " .. lives, 120, 20, nil, 50)
 livesText:setTextColor(5/255, 5/255, 200/255)
 
 --display GameOver! and sets the colour
-gameOverObject = display.newImageRect("images/lose.png", 2048, 1536)
+gameOverObject = display.newImageRect("images/gameOver.png", 1100, 1000)
 gameOverObject.isVisible = false
-gameOverObject.x=display.contentWidth/2
+gameOverObject.x= 510
 gameOverObject.y=300
 
 --display You win! and sets the colour
@@ -225,5 +268,3 @@ numericField:addEventListener( "userInput", NumericFieldsListener)
 
 -- call the funtion to ask the question
 AskQuestions()
-
-

@@ -13,6 +13,12 @@ scrollSpeed2 = 4 - 8
 --background image with width an height
 local backgroungImage = display.newImageRect("Images/background.png", 2048, 1536)
 
+--create sound(I got this code from https://docs.coronalabs.com/api/library/audio/play.html)
+local backgroundSound = audio.loadSound( "Sound/bkgMusic.MP3" )
+
+-- Play the correct soud on any available channel
+local backgroundSoundChannel = audio.play( backgroundSound )
+
 --character image with width and height
 local beetleship = display.newImageRect("Images/beetleship.png", 200, 200)
 

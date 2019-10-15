@@ -25,6 +25,10 @@ local correctAnswer = 0
 local incorrectObject
 local points = 0
 local lives = 3
+--create sound(I got this code from https://docs.coronalabs.com/api/library/audio/play.html)
+local correctSound = audio.loadSound( "Sound/correctSound.MP3" )
+local wrongSound = audio.loadSound( "Sound/wrongSound.MP3" )
+
 
 -----------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -71,6 +75,8 @@ local function NumericFieldsListener( event )
 		--if the users answer and the correct answer are the same:
 	    if (userAnswer == correctAnswer) then
 	    	correctObject.isVisible = true
+	    	-- Play the correct soud on any available channel
+       	    local correctSoundChannel = audio.play( correctSound )
 			timer.performWithDelay(1000, Hidecorrect)
 		if (points == 4 ) then
 	  		    WinObject.isVisible = true 
@@ -78,6 +84,7 @@ local function NumericFieldsListener( event )
 	  		    correctObject.isVisible = false
 	  		    questionObject.isVisible = false
 	  		    numericField.inputtype = false
+	  		    correctSoundChannel = audio.play( correctSound )
 	  	    end
 	    	-- give a point if user gets the correct answer
 	    	points = points + 1
@@ -92,11 +99,13 @@ local function NumericFieldsListener( event )
 	  		    correctObject.isVisible = false
 	  		    questionObject.isVisible = false
 	  		    numericField.inputtype = false
+	  		    local wrongSoundChannel = audio.play( wrongSound )
 			else
 
         	 --if the users answer and the correct answer are not the same:
              incorrectObject.isVisible = true
 		     timer.performWithDelay(1000, Hideincorrect) 
+		     wrongSoundChannel = audio.play( wrongSound )
 		     correctAnswerObject.text = "The correct answer is" ..  correctAnswer
 		     correctAnswerObject.isVisible = true
 		     timer.performWithDelay(1500, HidecorrectAnswer)
