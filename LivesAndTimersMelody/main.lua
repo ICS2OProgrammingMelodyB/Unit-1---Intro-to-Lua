@@ -18,6 +18,7 @@ display.setDefault("background", 240/255, 5/255, 255/255)
 -- Correct sound 
 local correctSound = audio.loadSound("Sound/correctSound.mp3") -- setting a varable to an mp3 file
 local wrongSound = audio.loadSound("Sound/wrongSound.mp3")
+local gameOver = audio.loadSound("Sound/game over.mp3")
 -------------------------------------------------------
 --LOCAL VARIABLES
 -------------------------------------------------------
@@ -35,14 +36,15 @@ local incorrectObject
 local randomOperator
 local correctAnswerObject
 local points = 0
-local lives = 3
-local totalSeconds = 5 
-local secondsLeft = 5
+local lives = 4
+local totalSeconds = 10
+local secondsLeft = 10
 local clockText
 local countDownTimer
 local heart1
 local heart2
 local heart3
+local heart4
 
 ----------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -166,6 +168,15 @@ local function NumericFieldsListener( event )
 	    	 lives = lives - 1
 	    	 --update it in the display object
 	    	 livesText.text = "lives = " .. lives
+	        if (lives == 2)then
+				heart2.isVisible = false
+		    elseif(lives == 1)then
+				heart1.isVisible = false
+			elseif(lives == 0) then
+				heart3.isVisible = false
+			elseif(lives == 0) then
+				heart4.isVisible = false
+			end
 	    	end
 		end
 		
@@ -198,12 +209,14 @@ local function UpdateTime()
 		end
 
 		--cancel the timer and remove the third heart by making it invisible
-		if (lives == 2)then
+		if (lives == 3)then
 			heart2.isVisible = false
-		elseif(lives == 1)then
+		elseif(lives == 2)then
 			heart1.isVisible = false
-		elseif(lives == 0) then
+		elseif(lives == 1) then
 			heart3.isVisible = false
+		elseif(lives == 0) then
+			heart4.isVisible = false
 		end
 		AskQuestions()
 	end
@@ -238,6 +251,11 @@ heart2.y=  display.contentHeight * 1/7
 heart3= display.newImageRect("images/heart.png", 100, 100)
 heart3.x= display.contentWidth * 5/8
 heart3.y=  display.contentHeight * 1/7
+
+--create the lives to display on the screen
+heart4= display.newImageRect("images/heart.png", 100, 100)
+heart4.x= display.contentWidth * 4/8
+heart4.y=  display.contentHeight * 1/7
 
 --display a question and sets the colour
 questionObject = display.newText( "", display.contentWidth/3, display.contentHeight/2, nil, 50)

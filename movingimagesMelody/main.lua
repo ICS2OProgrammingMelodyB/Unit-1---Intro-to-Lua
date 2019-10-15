@@ -17,7 +17,7 @@ local backgroungImage = display.newImageRect("Images/background.png", 2048, 1536
 local backgroundSound = audio.loadSound( "Sound/bkgMusic.MP3" )
 
 -- Play the correct soud on any available channel
-local backgroundSoundChannel = audio.play( backgroundSound )
+local backgroundSoundChannel = audio.play( backgroundSound,{loop= -1} )
 
 --character image with width and height
 local beetleship = display.newImageRect("Images/beetleship.png", 200, 200)
