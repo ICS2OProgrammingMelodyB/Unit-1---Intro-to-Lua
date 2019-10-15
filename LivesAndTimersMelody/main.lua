@@ -179,7 +179,7 @@ local function UpdateTime()
 	secondsLeft = secondsLeft - 1
 
 	-- display the number of seconds left in the clock object
-	clockText.text = secondLeft .. ""
+	clockText.text = "secondsLeft = " .. secondsLeft
 
 	if(secondsLeft == 0 )then
 		--reset the number of seconds left
@@ -211,6 +211,12 @@ heart1.x= display.contentWidth * 7/8
 heart1.y=  display.contentHeight * 1/7
 
 --create the lives to display on the screen
+clockText = display.newText("secondsLeft = ".. secondsLeft, 100, 100, nil, 50)
+clockText:setTextColor(168/255, 255/255, 5/255)
+clockText.x= 190
+clockText.y= 100
+
+--create the lives to display on the screen
 heart2= display.newImageRect("images/heart.png", 100, 100)
 heart2.x= display.contentWidth * 6/8
 heart2.y=  display.contentHeight * 1/7
@@ -235,7 +241,7 @@ numericField.isVisible = true
 numericField.inputType = "number"
 
 --display the correct answer
-correctAnswerObject = display.newText( "The correct answer is" ..  correctAnswer, display.contentWidth/2, display.contentHeight*3/4, nil, 50)
+correctAnswerObject = display.newText( "The correct answer is " ..  correctAnswer, display.contentWidth/2, display.contentHeight*3/4, nil, 50)
 correctAnswerObject:setTextColor(5/255, 5/255, 200/255)
 correctAnswerObject.isVisible = false
 
@@ -268,3 +274,4 @@ numericField:addEventListener( "userInput", NumericFieldsListener)
 
 -- call the funtion to ask the question
 AskQuestions()
+StartTimer()
