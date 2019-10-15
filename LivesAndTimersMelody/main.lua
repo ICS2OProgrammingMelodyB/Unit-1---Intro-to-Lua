@@ -42,6 +42,7 @@ local clockText
 local countDownTimer
 local heart1
 local heart2
+local heart3
 
 ----------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -185,12 +186,24 @@ local function UpdateTime()
 		--reset the number of seconds left
 		secondsLeft = totalSeconds
 		lives = lives - 1
+		--update it in the display object
+	    livesText.text = "lives = " .. lives
+	    if (lives == 0 ) then
+	  		gameOverObject.isVisible = true 
+	  	    incorrectObject.isVisible = false
+	  	    correctObject.isVisible = false
+	  		questionObject.isVisible = false
+	  		numericField.inputtype = false
+	  		local wrongSoundChannel = audio.play( wrongSound )
+		end
 
 		--cancel the timer and remove the third heart by making it invisible
 		if (lives == 2)then
 			heart2.isVisible = false
 		elseif(lives == 1)then
 			heart1.isVisible = false
+		elseif(lives == 0) then
+			heart3.isVisible = false
 		end
 		AskQuestions()
 	end
@@ -220,6 +233,11 @@ clockText.y= 100
 heart2= display.newImageRect("images/heart.png", 100, 100)
 heart2.x= display.contentWidth * 6/8
 heart2.y=  display.contentHeight * 1/7
+
+--create the lives to display on the screen
+heart3= display.newImageRect("images/heart.png", 100, 100)
+heart3.x= display.contentWidth * 5/8
+heart3.y=  display.contentHeight * 1/7
 
 --display a question and sets the colour
 questionObject = display.newText( "", display.contentWidth/3, display.contentHeight/2, nil, 50)
