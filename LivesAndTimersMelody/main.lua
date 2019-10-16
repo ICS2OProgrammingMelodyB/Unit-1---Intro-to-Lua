@@ -18,7 +18,9 @@ display.setDefault("background", 240/255, 5/255, 255/255)
 -- Correct sound 
 local correctSound = audio.loadSound("Sound/correctSound.mp3") -- setting a varable to an mp3 file
 local wrongSound = audio.loadSound("Sound/wrongSound.mp3")
-local gameOver = audio.loadSound("Sound/game over.mp3")
+local wrongSoundChannel 
+local gameOver = audio.loadSound("Sound/gameover.mp3")
+local gameOverChannel
 -------------------------------------------------------
 --LOCAL VARIABLES
 -------------------------------------------------------
@@ -129,6 +131,7 @@ local function NumericFieldsListener( event )
 		--if the users answer and the correct answer are the same:
 	    if (userAnswer == correctAnswer) then
 			correctObject.isVisible = true
+			secondsLeft = totalSeconds
 			local correctSoundChannel = audio.play( correctSound )
 			timer.performWithDelay(1000, Hidecorrect)	
 		if (points == 4 ) then 
@@ -152,12 +155,13 @@ local function NumericFieldsListener( event )
 	  		    correctObject.isVisible = false
 	  		    questionObject.isVisible = false
 	  		    numericField.isVisible = false
-	  		    local wrongSoundChannel = audio.play( wrongSound )
+	  		    gameOverChannel = audio.play( gameOver )
 			else
         	
         	--if the users answer and the correct answer are not the same:
         	incorrectObject.isVisible = true
         	math.round(correctAnswer)
+        	secondsLeft = totalSeconds
         	wrongSoundChannel = audio.play( wrongSound )
 		    timer.performWithDelay(1000, Hideincorrect)
 		    correctAnswerObject.text = "The correct answer is" ..  correctAnswer
@@ -168,11 +172,11 @@ local function NumericFieldsListener( event )
 	    	 lives = lives - 1
 	    	 --update it in the display object
 	    	 livesText.text = "lives = " .. lives
-	        if (lives == 2)then
+	        if (lives == 3)then
 				heart2.isVisible = false
-		    elseif(lives == 1)then
+		    elseif(lives == 2)then
 				heart1.isVisible = false
-			elseif(lives == 0) then
+			elseif(lives == 1) then
 				heart3.isVisible = false
 			elseif(lives == 0) then
 				heart4.isVisible = false
@@ -232,7 +236,7 @@ end
 ------------------------------------------------------------
 
 --create the lives to display on the screen
-heart1= display.newImageRect("images/heart.png", 100, 100)
+heart1= display.newImageRect("Images/heart.png", 100, 100)
 heart1.x= display.contentWidth * 7/8
 heart1.y=  display.contentHeight * 1/7
 
@@ -243,17 +247,17 @@ clockText.x= 190
 clockText.y= 100
 
 --create the lives to display on the screen
-heart2= display.newImageRect("images/heart.png", 100, 100)
+heart2= display.newImageRect("Images/heart.png", 100, 100)
 heart2.x= display.contentWidth * 6/8
 heart2.y=  display.contentHeight * 1/7
 
 --create the lives to display on the screen
-heart3= display.newImageRect("images/heart.png", 100, 100)
+heart3= display.newImageRect("Images/heart.png", 100, 100)
 heart3.x= display.contentWidth * 5/8
 heart3.y=  display.contentHeight * 1/7
 
 --create the lives to display on the screen
-heart4= display.newImageRect("images/heart.png", 100, 100)
+heart4= display.newImageRect("Images/heart.png", 100, 100)
 heart4.x= display.contentWidth * 4/8
 heart4.y=  display.contentHeight * 1/7
 
@@ -290,7 +294,7 @@ livesText = display.newText("Lives = " .. lives, 120, 20, nil, 50)
 livesText:setTextColor(5/255, 5/255, 200/255)
 
 --display GameOver! and sets the colour
-gameOverObject = display.newImageRect("images/gameOver.png", 1100, 1000)
+gameOverObject = display.newImageRect("Images/gameOver.png", 1100, 1000)
 gameOverObject.isVisible = false
 gameOverObject.x= 510
 gameOverObject.y=300
