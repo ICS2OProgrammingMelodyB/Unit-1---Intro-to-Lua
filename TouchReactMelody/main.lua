@@ -35,7 +35,7 @@ checkMark.y = 600
 checkMark.isVisible = false
 
 --create sound(I got this code from https://docs.coronalabs.com/api/library/audio/play.html)
-local backgroundSound = audio.loadSound( "Sound/bkgMusic.MP3" )
+local correctSound = audio.loadSound( "Sound/Correct Answer Sound Effect.MP3" )
  
 -- Function: BlueButtonListener
 -- Input: touch listener
@@ -49,7 +49,7 @@ local function BlueButtonListener(touch)
 		textObject.isVisible = true
 		checkMark.isVisible = true
 		-- Play the correct soud on any available channel
-        local backgroundSoundChannel = audio.play( backgroundSound )
+        local correctSoundChannel = audio.play( correctSound )
     end
 
 	if (touch.phase == "ended") then

@@ -128,6 +128,7 @@ local function NumericFieldsListener( event )
 
 		--if the users answer and the correct answer are the same:
 	    if (userAnswer == correctAnswer) then
+	    	secondsLeft = totalSeconds
 			correctObject.isVisible = true
 			local correctSoundChannel = audio.play( correctSound )
 			timer.performWithDelay(1000, Hidecorrect)	
@@ -157,6 +158,7 @@ local function NumericFieldsListener( event )
         	
         	--if the users answer and the correct answer are not the same:
         	incorrectObject.isVisible = true
+        	secondsLeft = totalSeconds
         	math.round(correctAnswer)
         	wrongSoundChannel = audio.play( wrongSound )
 		    timer.performWithDelay(1000, Hideincorrect)
@@ -205,7 +207,7 @@ local function UpdateTime()
 	  	    correctObject.isVisible = false
 	  		questionObject.isVisible = false
 	  		numericField.inputtype = false
-	  		local wrongSoundChannel = audio.play( wrongSound )
+	  		local gameOverChannel = audio.play( gameOver )
 		end
 
 		--cancel the timer and remove the third heart by making it invisible
