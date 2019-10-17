@@ -142,7 +142,6 @@ local function fourthBall()
 
 end
 
-<<<<<<< HEAD
 
 
 
@@ -154,8 +153,8 @@ end
 
 
 
-=======
->>>>>>> 1a11613cc31c0c50789fd1fe377afb518ea94ad1
+
+
 ----------------------------------------------------------
 --TIMER DELAY - call each function after the given millisecond
 ---------------------------------------------------------------
