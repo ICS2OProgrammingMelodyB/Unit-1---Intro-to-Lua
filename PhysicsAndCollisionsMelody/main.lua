@@ -120,13 +120,6 @@ end
 
 
 
-local leftWall = display.newImageRect("Platform.png", 320, 200)
-leftWall.x = display.contentWidth - 450
-leftWall.y = display.contentHeight - 40
-leftWall.alpha = 0
-physics.addBody(leftWall, "static", {bouce = 0})
-
-
 
 
 
