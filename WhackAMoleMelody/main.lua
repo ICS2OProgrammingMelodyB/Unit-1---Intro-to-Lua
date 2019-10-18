@@ -16,6 +16,8 @@ local pointsText
 local points = 0
 local hitSound = audio.loadSound( "Sound/hitSound.MP3" )
 local hitSoundChannel = audio.play( hitSound )
+local backgroundSound = audio.loadSound( "Sound/background.MP3" )
+local backgroundSoundChannel = audio.play( backgroundSound )
 
 -------------------------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -24,7 +26,7 @@ local hitSoundChannel = audio.play( hitSound )
 
 --This function makes the mole appear in a randon (x,y) position on the screen
 -- before calling the hide function 
-local function PopUp()
+function PopUp()
 	-- choosing random positions on the screen between 0 and the size of the screen
 	mole.x = math.random( 0, display.contentWidth )
 	mole.y = math.random( 0, display.contentHeight)
@@ -38,13 +40,13 @@ local function PopUp()
 end
 
 --This function calls the PopUp function after 3 seconds
-local function PopUpDelay()
+function PopUpDelay()
 	timer.performWithDelay(1000, PopUp)
 end
 
 
 -- This function starts the game
-local function GameStart()
+function GameStart()
 	PopUpDelay()
 end
 
@@ -53,12 +55,11 @@ function HideMole()
 	--changing visibility
 	mole.isVisible = false
 	timer.performWithDelay(1500, PopUpDelay)
-	GameStart()
 end
 
 --this function increments the score only if the mole is clicked. It then displays the
 -- new score.
-local function Whacked( event )
+function Whacked( event )
 	-- If touch phase just started
 	if (event.phase == "began")then
 		-- give a point if user whacks the mole
