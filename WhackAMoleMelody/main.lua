@@ -16,8 +16,8 @@ local pointsText
 local points = 0
 local hitSound = audio.loadSound( "Sound/hitSound.MP3" )
 local hitSoundChannel = audio.play( hitSound )
-local backgroundSound = audio.loadSound( "Sound/background.MP3" )
-local backgroundSoundChannel = audio.play( backgroundSound )
+local backgroundSound = audio.loadStream( "Sound/background.MP3" )
+local backgroundSoundChannel = audio.play( backgroundSound, {loop = -1} )
 
 -------------------------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -35,7 +35,7 @@ function PopUp()
 	mole.isVisible = true
 
 	-- hides the mole
-	timer.performWithDelay(2000, HideMole)
+	timer.performWithDelay(1000, HideMole)
 
 end
 
@@ -48,13 +48,14 @@ end
 -- This function starts the game
 function GameStart()
 	PopUpDelay()
+	EndGame()
 end
 
 -- This function makes the mole invisible and then calls the PopUpDelay function 
 function HideMole()
 	--changing visibility
 	mole.isVisible = false
-	timer.performWithDelay(1500, PopUpDelay)
+	timer.performWithDelay(1000, PopUpDelay)
 end
 
 --this function increments the score only if the mole is clicked. It then displays the
@@ -72,6 +73,14 @@ function Whacked( event )
 
 end
 
+function EndGame()
+	--end the game
+	if (points == 20 ) then
+		mole.isVisible = false
+		audio.stop(backgroundSoundChannel)
+	end
+
+end
 
 -----------------------------------------------------
 --OBJECT CREATION
