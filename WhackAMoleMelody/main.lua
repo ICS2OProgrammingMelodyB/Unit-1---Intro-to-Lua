@@ -11,6 +11,7 @@ display.setStatusBar(display.HiddenStatusBar)
 --LOCAL VARIABLE
 --------------------------------------------------------------------
 local background
+local youwin
 local mole
 local pointsText
 local points = 0
@@ -66,8 +67,16 @@ function Whacked( event )
 	    points = points + 1
 
 	    --update it in the display object
-	    pointsText.text = "Points = " .. points	
+	    pointsText.text = "Points = " .. points
 	    hitSoundChannel = audio.play( hitSound )
+	end
+
+	if (points == 5 )then
+		display.newImageRect("Image/youwin.jpg", 1024, 768)
+		youwin.anchorX= 0
+		youwin.anchorY= 0
+		mole.isVisible = false
+		youwin.isVisible = true
 	end
 
 end
@@ -97,10 +106,17 @@ mole.y = display.contentCenterY
 mole:scale(0.25, 0.25)
 mole.isVisible = false
 
--- creating points
 --display the amount of points as a text object
 pointsText = display.newText("Points = " .. points, 900, 20, nil, 50)
 pointsText:setTextColor(5/255, 5/255, 200/255)
+
+-- creating you win
+youwin =display.newImageRect("Image/youwin.jpg", 0, 0)
+
+-- Setting position
+youwin.x = display.contentCenterX
+youwin.y = display.contentCenterY
+youwin.isVisible = false
 
 -------------------------------------------------------
 --EVENT LISTENERS
