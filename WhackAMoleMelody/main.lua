@@ -11,7 +11,6 @@ display.setStatusBar(display.HiddenStatusBar)
 --LOCAL VARIABLE
 --------------------------------------------------------------------
 local background
-local youwin
 local mole
 local pointsText
 local points = 0
@@ -72,14 +71,6 @@ function Whacked( event )
 	    hitSoundChannel = audio.play( hitSound )
 	end
 
-	if (points == 5 )then
-		display.newImageRect("Image/youwin.jpg", 1024, 768)
-		youwin.anchorX= 0
-		youwin.anchorY= 0
-		mole.isVisible = false
-		youwin.isVisible = true
-	end
-
 end
 
 function EndGame()
@@ -121,11 +112,6 @@ pointsText:setTextColor(5/255, 5/255, 200/255)
 
 -- creating you win
 youwin =display.newImageRect("Image/youwin.jpg", 0, 0)
-
--- Setting position
-youwin.x = display.contentCenterX
-youwin.y = display.contentCenterY
-youwin.isVisible = false
 
 -------------------------------------------------------
 --EVENT LISTENERS
