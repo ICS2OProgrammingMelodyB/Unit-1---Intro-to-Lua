@@ -242,7 +242,7 @@ heart1= display.newImageRect("Images/heart.png", 100, 100)
 heart1.x= display.contentWidth * 7/8
 heart1.y=  display.contentHeight * 1/7
 
---create the lives to display on the screen
+--create the tome to display on the screen
 clockText = display.newText("secondsLeft = ".. secondsLeft, 100, 100, nil, 50)
 clockText:setTextColor(168/255, 255/255, 5/255)
 clockText.x= 190
